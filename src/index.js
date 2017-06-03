@@ -1,19 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import {h, Component, cloneElement} from 'preact'
 import matchMedia from 'matchmedia'
 import hyphenate  from 'hyphenate-style-name'
 import mediaQuery from './mediaQuery'
 import toQuery  from './toQuery'
 
 
-const defaultTypes = {
-  component: PropTypes.node,
-  query: PropTypes.string,
-  values: PropTypes.shape(mediaQuery.matchers),
-  children: PropTypes.oneOfType([ PropTypes.node, PropTypes.function ]),
-  onChange: PropTypes.function,
-  onBeforeChange: PropTypes.function,
-}
 const mediaKeys = Object.keys(mediaQuery.all)
 const excludedQueryKeys = Object.keys(defaultTypes)
 const excludedPropKeys = excludedQueryKeys.concat(mediaKeys)
@@ -24,7 +15,7 @@ function omit(object, keys) {
   return newObject
 }
 
-export default class MediaQuery extends React.Component {
+export default class MediaQuery extends Component {
   static displayName = 'MediaQuery'
   static defaultProps = {
     values: {}
@@ -104,20 +95,20 @@ export default class MediaQuery extends React.Component {
     }
     const props = omit(this.props, excludedPropKeys)
     const hasMergeProps = Object.keys(props).length > 0
-    const childrenCount = React.Children.count(this.props.children)
+    const childrenCount = this.props.children.length
     const wrapChildren = this.props.component ||
       childrenCount > 1 ||
       typeof this.props.children === 'string' ||
       Array.isArray(this.props.children) && childrenCount == 1 ||
       this.props.children === undefined
     if (wrapChildren) {
-      return React.createElement(
+      return h(
         this.props.component || 'div',
         props,
         this.props.children
       )
     } else if (hasMergeProps) {
-      return React.cloneElement(
+      return cloneElement(
         this.props.children,
         props
       )
