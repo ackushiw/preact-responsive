@@ -4,6 +4,14 @@ import hyphenate  from 'hyphenate-style-name'
 import mediaQuery from './mediaQuery'
 import toQuery  from './toQuery'
 
+const defaultTypes = {
+  component: true,
+  query: true,
+  values: true,
+  children: true,
+  onChange: true,
+  onBeforeChange: true,
+}
 
 const mediaKeys = Object.keys(mediaQuery.all)
 const excludedQueryKeys = Object.keys(defaultTypes)
@@ -24,14 +32,18 @@ export default class MediaQuery extends Component {
   state = { matches: false }
 
   componentWillMount() {
+
+    console.log('MEDIA_QUERY WILL_MOUNT', this.props)
     this.updateQuery(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('MEDIA_QUERY WILL RECEIVE', nextProps)
     this.updateQuery(nextProps)
   }
 
   updateQuery(props) {
+    console.log('MEDIA_QUERY updateQuery', props)
     let values
     if (props.query) {
       this.query = props.query
@@ -77,6 +89,7 @@ export default class MediaQuery extends Component {
   }
 
   updateMatches = () => {
+    console.log('MEDIA_QUERY updateMatches', this._mql.matches)
     if (this._mql.matches === this.state.matches) {
       return
     }
@@ -86,6 +99,7 @@ export default class MediaQuery extends Component {
   }
 
   render() {
+    console.log('PRE_RESP', this.state.matches)
     if(typeof this.props.children === 'function') {
       return this.props.children(this.state.matches)
     }

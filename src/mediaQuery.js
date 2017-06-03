@@ -1,24 +1,26 @@
-import PropTypes from 'prop-types'
+const STRING = 'string'
+const NUMBER = 'number'
+const BOOL = 'boolean'
 
-const stringOrNumber = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number
-])
+const stringOrNumber = [
+  STRING,
+  NUMBER
+]
 
 // properties that match media queries
 const matchers = {
-  orientation: PropTypes.oneOf([
+  orientation: [
     'portrait',
     'landscape'
-  ]),
+  ],
 
-  scan: PropTypes.oneOf([
+  scan: [
     'progressive',
     'interlace'
-  ]),
+  ],
 
-  aspectRatio: PropTypes.string,
-  deviceAspectRatio: PropTypes.string,
+  aspectRatio: STRING,
+  deviceAspectRatio: STRING,
 
   height: stringOrNumber,
   deviceHeight: stringOrNumber,
@@ -26,20 +28,20 @@ const matchers = {
   width: stringOrNumber,
   deviceWidth: stringOrNumber,
 
-  color: PropTypes.bool,
+  color: BOOL,
 
-  colorIndex: PropTypes.bool,
+  colorIndex: BOOL,
 
-  monochrome: PropTypes.bool,
+  monochrome: BOOL,
   resolution: stringOrNumber
 }
 
 // media features
 const features = {
-  minAspectRatio: PropTypes.string,
-  maxAspectRatio: PropTypes.string,
-  minDeviceAspectRatio: PropTypes.string,
-  maxDeviceAspectRatio: PropTypes.string,
+  minAspectRatio: STRING,
+  maxAspectRatio: STRING,
+  minDeviceAspectRatio: STRING,
+  maxDeviceAspectRatio: STRING,
 
   minHeight: stringOrNumber,
   maxHeight: stringOrNumber,
@@ -51,14 +53,14 @@ const features = {
   minDeviceWidth: stringOrNumber,
   maxDeviceWidth: stringOrNumber,
 
-  minColor: PropTypes.number,
-  maxColor: PropTypes.number,
+  minColor: NUMBER,
+  maxColor: NUMBER,
 
-  minColorIndex: PropTypes.number,
-  maxColorIndex: PropTypes.number,
+  minColorIndex: NUMBER,
+  maxColorIndex: NUMBER,
 
-  minMonochrome: PropTypes.number,
-  maxMonochrome: PropTypes.number,
+  minMonochrome: NUMBER,
+  maxMonochrome: NUMBER,
 
   minResolution: stringOrNumber,
   maxResolution: stringOrNumber,
@@ -68,17 +70,17 @@ const features = {
 
 // media types
 const types = {
-  all: PropTypes.bool,
-  grid: PropTypes.bool,
-  aural: PropTypes.bool,
-  braille: PropTypes.bool,
-  handheld: PropTypes.bool,
-  print: PropTypes.bool,
-  projection: PropTypes.bool,
-  screen: PropTypes.bool,
-  tty: PropTypes.bool,
-  tv: PropTypes.bool,
-  embossed: PropTypes.bool
+  all: BOOL,
+  grid: BOOL,
+  aural: BOOL,
+  braille: BOOL,
+  handheld: BOOL,
+  print: BOOL,
+  projection: BOOL,
+  screen: BOOL,
+  tty: BOOL,
+  tv: BOOL,
+  embossed: BOOL
 }
 
 const all = { ...types, ...features }

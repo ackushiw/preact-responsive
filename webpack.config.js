@@ -10,10 +10,6 @@ module.exports = {
     library: 'MediaQuery'
   },
   devtool: 'source-map',
-  externals: {
-    'react': 'umd react',
-    'react-dom': 'umd react-dom'
-  },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.DedupePlugin()

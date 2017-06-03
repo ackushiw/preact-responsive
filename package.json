@@ -9,7 +9,7 @@
   },
   "author": "Contra <yo@contra.io> (http://contra.io)",
   "license": "MIT",
-  "main": "./dist/react-responsive.js",
+  "main": "./dist/preact-responsive.js",
   "files": [
     "dist"
   ],
@@ -53,6 +53,7 @@
     "jsdom": "^8.4.0",
     "mocha": "^2.4.5",
     "preact": "^8.1.0",
+    "preact-compat": "^3.16.0",
     "should": "^8.0.2",
     "sinon": "^1.17.3",
     "webpack": "^1.13.3",
