@@ -4,8 +4,8 @@ const webpack = require('webpack')
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: './dist/react-responsive.js',
-    sourceMapFilename: './dist/react-responsive.js.map',
+    filename: './dist/preact-responsive.js',
+    sourceMapFilename: './dist/preact-responsive.js.map',
     libraryTarget: 'umd',
     library: 'MediaQuery'
   },

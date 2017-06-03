@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"));
+		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define(["react"], factory);
+		define([], factory);
 	else if(typeof exports === 'object')
-		exports["MediaQuery"] = factory(require("react"));
+		exports["MediaQuery"] = factory();
 	else
-		root["MediaQuery"] = factory(root["react"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_15__) {
+		root["MediaQuery"] = factory();
+})(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -64,27 +64,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(15);
+	var _preact = __webpack_require__(11);
 	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(7);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _matchmedia = __webpack_require__(11);
+	var _matchmedia = __webpack_require__(10);
 	
 	var _matchmedia2 = _interopRequireDefault(_matchmedia);
 	
-	var _hyphenateStyleName = __webpack_require__(6);
+	var _hyphenateStyleName = __webpack_require__(7);
 	
 	var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
 	
-	var _mediaQuery = __webpack_require__(4);
+	var _mediaQuery = __webpack_require__(5);
 	
 	var _mediaQuery2 = _interopRequireDefault(_mediaQuery);
 	
-	var _toQuery = __webpack_require__(9);
+	var _toQuery = __webpack_require__(8);
 	
 	var _toQuery2 = _interopRequireDefault(_toQuery);
 	
@@ -96,12 +90,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var defaultTypes = {
-	  component: _propTypes2.default.node,
-	  query: _propTypes2.default.string,
-	  values: _propTypes2.default.shape(_mediaQuery2.default.matchers),
-	  children: _propTypes2.default.oneOfType([_propTypes2.default.node, _propTypes2.default.function])
-	};
 	var mediaKeys = Object.keys(_mediaQuery2.default.all);
 	var excludedQueryKeys = Object.keys(defaultTypes);
 	var excludedPropKeys = excludedQueryKeys.concat(mediaKeys);
@@ -114,8 +102,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return newObject;
 	}
 	
-	var MediaQuery = function (_React$Component) {
-	  _inherits(MediaQuery, _React$Component);
+	var MediaQuery = function (_Component) {
+	  _inherits(MediaQuery, _Component);
 	
 	  function MediaQuery() {
 	    var _ref;
@@ -178,6 +166,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.updateMatches();
 	    }
 	  }, {
+	    key: 'componentWillUpdate',
+	    value: function componentWillUpdate(_, nextState) {
+	      if (this.props.onBeforeChange && this.state.matches !== nextState.matches) {
+	        this.props.onBeforeChange(this.state.matches);
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(_, prevState) {
+	      if (this.props.onChange && prevState.matches !== this.state.matches) {
+	        this.props.onChange(this.state.matches);
+	      }
+	    }
+	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this._mql.removeListener(this.updateMatches);
@@ -194,12 +196,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      var props = omit(this.props, excludedPropKeys);
 	      var hasMergeProps = Object.keys(props).length > 0;
-	      var childrenCount = _react2.default.Children.count(this.props.children);
+	      var childrenCount = this.props.children.length;
 	      var wrapChildren = this.props.component || childrenCount > 1 || typeof this.props.children === 'string' || Array.isArray(this.props.children) && childrenCount == 1 || this.props.children === undefined;
 	      if (wrapChildren) {
-	        return _react2.default.createElement(this.props.component || 'div', props, this.props.children);
+	        return (0, _preact.h)(this.props.component || 'div', props, this.props.children);
 	      } else if (hasMergeProps) {
-	        return _react2.default.cloneElement(this.props.children, props);
+	        return (0, _preact.cloneElement)(this.props.children, props);
 	      } else if (childrenCount) {
 	        return this.props.children;
 	      } else {
@@ -209,7 +211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }]);
 	
 	  return MediaQuery;
-	}(_react2.default.Component);
+	}(_preact.Component);
 	
 	MediaQuery.displayName = 'MediaQuery';
 	MediaQuery.defaultProps = {
@@ -392,6 +394,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
+	process.prependListener = noop;
+	process.prependOnceListener = noop;
+	
+	process.listeners = function (name) { return [] }
 	
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
@@ -510,6 +516,26 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	'use strict';
+	
+	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+	
+	module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -520,16 +546,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _propTypes = __webpack_require__(7);
+	var _propTypes = __webpack_require__(15);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var stringOrNumber = _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]);
+	var stringOrNumber = _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]
 	
 	// properties that match media queries
-	var matchers = {
+	);var matchers = {
 	  orientation: _propTypes2.default.oneOf(['portrait', 'landscape']),
 	
 	  scan: _propTypes2.default.oneOf(['progressive', 'interlace']),
@@ -549,10 +575,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  monochrome: _propTypes2.default.bool,
 	  resolution: stringOrNumber
-	};
 	
-	// media features
-	var features = _extends({
+	  // media features
+	};var features = _extends({
 	  minAspectRatio: _propTypes2.default.string,
 	  maxAspectRatio: _propTypes2.default.string,
 	  minDeviceAspectRatio: _propTypes2.default.string,
@@ -611,7 +636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -683,7 +708,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -705,64 +730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-	    Symbol.for &&
-	    Symbol.for('react.element')) ||
-	    0xeac7;
-	
-	  var isValidElement = function(object) {
-	    return typeof object === 'object' &&
-	      object !== null &&
-	      object.$$typeof === REACT_ELEMENT_TYPE;
-	  };
-	
-	  // By explicitly using `prop-types` you are opting into new development behavior.
-	  // http://fb.me/prop-types-in-prod
-	  var throwOnDirectAccess = true;
-	  module.exports = __webpack_require__(14)(isValidElement, throwOnDirectAccess);
-	} else {
-	  // By explicitly using `prop-types` you are opting into new production behavior.
-	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(13)();
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
 /* 8 */
-/***/ (function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-	
-	'use strict';
-	
-	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-	
-	module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -782,11 +750,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return join(rules);
 	};
 	
-	var _hyphenateStyleName = __webpack_require__(6);
+	var _hyphenateStyleName = __webpack_require__(7);
 	
 	var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
 	
-	var _mediaQuery = __webpack_require__(4);
+	var _mediaQuery = __webpack_require__(5);
 	
 	var _mediaQuery2 = _interopRequireDefault(_mediaQuery);
 	
@@ -797,10 +765,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	function keyVal(k, v) {
-	  var realKey = (0, _hyphenateStyleName2.default)(k);
+	  var realKey = (0, _hyphenateStyleName2.default)(k
 	
 	  // px shorthand
-	  if (typeof v === 'number') {
+	  );if (typeof v === 'number') {
 	    v = v + 'px';
 	  }
 	  if (v === true) {
@@ -819,7 +787,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports) {
 
 	/*
@@ -982,12 +950,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var staticMatch = __webpack_require__(10).match;
+	var staticMatch = __webpack_require__(9).match;
 	var dynamicMatch = typeof window !== 'undefined' ? window.matchMedia : null;
 	
 	// our fake MediaQueryList
@@ -1034,6 +1002,411 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	!function() {
+	    'use strict';
+	    function VNode() {}
+	    function h(nodeName, attributes) {
+	        var lastSimple, child, simple, i, children = EMPTY_CHILDREN;
+	        for (i = arguments.length; i-- > 2; ) stack.push(arguments[i]);
+	        if (attributes && null != attributes.children) {
+	            if (!stack.length) stack.push(attributes.children);
+	            delete attributes.children;
+	        }
+	        while (stack.length) if ((child = stack.pop()) && void 0 !== child.pop) for (i = child.length; i--; ) stack.push(child[i]); else {
+	            if (child === !0 || child === !1) child = null;
+	            if (simple = 'function' != typeof nodeName) if (null == child) child = ''; else if ('number' == typeof child) child = String(child); else if ('string' != typeof child) simple = !1;
+	            if (simple && lastSimple) children[children.length - 1] += child; else if (children === EMPTY_CHILDREN) children = [ child ]; else children.push(child);
+	            lastSimple = simple;
+	        }
+	        var p = new VNode();
+	        p.nodeName = nodeName;
+	        p.children = children;
+	        p.attributes = null == attributes ? void 0 : attributes;
+	        p.key = null == attributes ? void 0 : attributes.key;
+	        if (void 0 !== options.vnode) options.vnode(p);
+	        return p;
+	    }
+	    function extend(obj, props) {
+	        for (var i in props) obj[i] = props[i];
+	        return obj;
+	    }
+	    function cloneElement(vnode, props) {
+	        return h(vnode.nodeName, extend(extend({}, vnode.attributes), props), arguments.length > 2 ? [].slice.call(arguments, 2) : vnode.children);
+	    }
+	    function enqueueRender(component) {
+	        if (!component.__d && (component.__d = !0) && 1 == items.push(component)) (options.debounceRendering || setTimeout)(rerender);
+	    }
+	    function rerender() {
+	        var p, list = items;
+	        items = [];
+	        while (p = list.pop()) if (p.__d) renderComponent(p);
+	    }
+	    function isSameNodeType(node, vnode, hydrating) {
+	        if ('string' == typeof vnode || 'number' == typeof vnode) return void 0 !== node.splitText;
+	        if ('string' == typeof vnode.nodeName) return !node._componentConstructor && isNamedNode(node, vnode.nodeName); else return hydrating || node._componentConstructor === vnode.nodeName;
+	    }
+	    function isNamedNode(node, nodeName) {
+	        return node.__n === nodeName || node.nodeName.toLowerCase() === nodeName.toLowerCase();
+	    }
+	    function getNodeProps(vnode) {
+	        var props = extend({}, vnode.attributes);
+	        props.children = vnode.children;
+	        var defaultProps = vnode.nodeName.defaultProps;
+	        if (void 0 !== defaultProps) for (var i in defaultProps) if (void 0 === props[i]) props[i] = defaultProps[i];
+	        return props;
+	    }
+	    function createNode(nodeName, isSvg) {
+	        var node = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', nodeName) : document.createElement(nodeName);
+	        node.__n = nodeName;
+	        return node;
+	    }
+	    function removeNode(node) {
+	        if (node.parentNode) node.parentNode.removeChild(node);
+	    }
+	    function setAccessor(node, name, old, value, isSvg) {
+	        if ('className' === name) name = 'class';
+	        if ('key' === name) ; else if ('ref' === name) {
+	            if (old) old(null);
+	            if (value) value(node);
+	        } else if ('class' === name && !isSvg) node.className = value || ''; else if ('style' === name) {
+	            if (!value || 'string' == typeof value || 'string' == typeof old) node.style.cssText = value || '';
+	            if (value && 'object' == typeof value) {
+	                if ('string' != typeof old) for (var i in old) if (!(i in value)) node.style[i] = '';
+	                for (var i in value) node.style[i] = 'number' == typeof value[i] && IS_NON_DIMENSIONAL.test(i) === !1 ? value[i] + 'px' : value[i];
+	            }
+	        } else if ('dangerouslySetInnerHTML' === name) {
+	            if (value) node.innerHTML = value.__html || '';
+	        } else if ('o' == name[0] && 'n' == name[1]) {
+	            var useCapture = name !== (name = name.replace(/Capture$/, ''));
+	            name = name.toLowerCase().substring(2);
+	            if (value) {
+	                if (!old) node.addEventListener(name, eventProxy, useCapture);
+	            } else node.removeEventListener(name, eventProxy, useCapture);
+	            (node.__l || (node.__l = {}))[name] = value;
+	        } else if ('list' !== name && 'type' !== name && !isSvg && name in node) {
+	            setProperty(node, name, null == value ? '' : value);
+	            if (null == value || value === !1) node.removeAttribute(name);
+	        } else {
+	            var ns = isSvg && name !== (name = name.replace(/^xlink\:?/, ''));
+	            if (null == value || value === !1) if (ns) node.removeAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase()); else node.removeAttribute(name); else if ('function' != typeof value) if (ns) node.setAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase(), value); else node.setAttribute(name, value);
+	        }
+	    }
+	    function setProperty(node, name, value) {
+	        try {
+	            node[name] = value;
+	        } catch (e) {}
+	    }
+	    function eventProxy(e) {
+	        return this.__l[e.type](options.event && options.event(e) || e);
+	    }
+	    function flushMounts() {
+	        var c;
+	        while (c = mounts.pop()) {
+	            if (options.afterMount) options.afterMount(c);
+	            if (c.componentDidMount) c.componentDidMount();
+	        }
+	    }
+	    function diff(dom, vnode, context, mountAll, parent, componentRoot) {
+	        if (!diffLevel++) {
+	            isSvgMode = null != parent && void 0 !== parent.ownerSVGElement;
+	            hydrating = null != dom && !('__preactattr_' in dom);
+	        }
+	        var ret = idiff(dom, vnode, context, mountAll, componentRoot);
+	        if (parent && ret.parentNode !== parent) parent.appendChild(ret);
+	        if (!--diffLevel) {
+	            hydrating = !1;
+	            if (!componentRoot) flushMounts();
+	        }
+	        return ret;
+	    }
+	    function idiff(dom, vnode, context, mountAll, componentRoot) {
+	        var out = dom, prevSvgMode = isSvgMode;
+	        if (null == vnode) vnode = '';
+	        if ('string' == typeof vnode) {
+	            if (dom && void 0 !== dom.splitText && dom.parentNode && (!dom._component || componentRoot)) {
+	                if (dom.nodeValue != vnode) dom.nodeValue = vnode;
+	            } else {
+	                out = document.createTextNode(vnode);
+	                if (dom) {
+	                    if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
+	                    recollectNodeTree(dom, !0);
+	                }
+	            }
+	            out.__preactattr_ = !0;
+	            return out;
+	        }
+	        if ('function' == typeof vnode.nodeName) return buildComponentFromVNode(dom, vnode, context, mountAll);
+	        isSvgMode = 'svg' === vnode.nodeName ? !0 : 'foreignObject' === vnode.nodeName ? !1 : isSvgMode;
+	        if (!dom || !isNamedNode(dom, String(vnode.nodeName))) {
+	            out = createNode(String(vnode.nodeName), isSvgMode);
+	            if (dom) {
+	                while (dom.firstChild) out.appendChild(dom.firstChild);
+	                if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
+	                recollectNodeTree(dom, !0);
+	            }
+	        }
+	        var fc = out.firstChild, props = out.__preactattr_ || (out.__preactattr_ = {}), vchildren = vnode.children;
+	        if (!hydrating && vchildren && 1 === vchildren.length && 'string' == typeof vchildren[0] && null != fc && void 0 !== fc.splitText && null == fc.nextSibling) {
+	            if (fc.nodeValue != vchildren[0]) fc.nodeValue = vchildren[0];
+	        } else if (vchildren && vchildren.length || null != fc) innerDiffNode(out, vchildren, context, mountAll, hydrating || null != props.dangerouslySetInnerHTML);
+	        diffAttributes(out, vnode.attributes, props);
+	        isSvgMode = prevSvgMode;
+	        return out;
+	    }
+	    function innerDiffNode(dom, vchildren, context, mountAll, isHydrating) {
+	        var j, c, vchild, child, originalChildren = dom.childNodes, children = [], keyed = {}, keyedLen = 0, min = 0, len = originalChildren.length, childrenLen = 0, vlen = vchildren ? vchildren.length : 0;
+	        if (0 !== len) for (var i = 0; i < len; i++) {
+	            var _child = originalChildren[i], props = _child.__preactattr_, key = vlen && props ? _child._component ? _child._component.__k : props.key : null;
+	            if (null != key) {
+	                keyedLen++;
+	                keyed[key] = _child;
+	            } else if (props || (void 0 !== _child.splitText ? isHydrating ? _child.nodeValue.trim() : !0 : isHydrating)) children[childrenLen++] = _child;
+	        }
+	        if (0 !== vlen) for (var i = 0; i < vlen; i++) {
+	            vchild = vchildren[i];
+	            child = null;
+	            var key = vchild.key;
+	            if (null != key) {
+	                if (keyedLen && void 0 !== keyed[key]) {
+	                    child = keyed[key];
+	                    keyed[key] = void 0;
+	                    keyedLen--;
+	                }
+	            } else if (!child && min < childrenLen) for (j = min; j < childrenLen; j++) if (void 0 !== children[j] && isSameNodeType(c = children[j], vchild, isHydrating)) {
+	                child = c;
+	                children[j] = void 0;
+	                if (j === childrenLen - 1) childrenLen--;
+	                if (j === min) min++;
+	                break;
+	            }
+	            child = idiff(child, vchild, context, mountAll);
+	            if (child && child !== dom) if (i >= len) dom.appendChild(child); else if (child !== originalChildren[i]) if (child === originalChildren[i + 1]) removeNode(originalChildren[i]); else dom.insertBefore(child, originalChildren[i] || null);
+	        }
+	        if (keyedLen) for (var i in keyed) if (void 0 !== keyed[i]) recollectNodeTree(keyed[i], !1);
+	        while (min <= childrenLen) if (void 0 !== (child = children[childrenLen--])) recollectNodeTree(child, !1);
+	    }
+	    function recollectNodeTree(node, unmountOnly) {
+	        var component = node._component;
+	        if (component) unmountComponent(component); else {
+	            if (null != node.__preactattr_ && node.__preactattr_.ref) node.__preactattr_.ref(null);
+	            if (unmountOnly === !1 || null == node.__preactattr_) removeNode(node);
+	            removeChildren(node);
+	        }
+	    }
+	    function removeChildren(node) {
+	        node = node.lastChild;
+	        while (node) {
+	            var next = node.previousSibling;
+	            recollectNodeTree(node, !0);
+	            node = next;
+	        }
+	    }
+	    function diffAttributes(dom, attrs, old) {
+	        var name;
+	        for (name in old) if ((!attrs || null == attrs[name]) && null != old[name]) setAccessor(dom, name, old[name], old[name] = void 0, isSvgMode);
+	        for (name in attrs) if (!('children' === name || 'innerHTML' === name || name in old && attrs[name] === ('value' === name || 'checked' === name ? dom[name] : old[name]))) setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
+	    }
+	    function collectComponent(component) {
+	        var name = component.constructor.name;
+	        (components[name] || (components[name] = [])).push(component);
+	    }
+	    function createComponent(Ctor, props, context) {
+	        var inst, list = components[Ctor.name];
+	        if (Ctor.prototype && Ctor.prototype.render) {
+	            inst = new Ctor(props, context);
+	            Component.call(inst, props, context);
+	        } else {
+	            inst = new Component(props, context);
+	            inst.constructor = Ctor;
+	            inst.render = doRender;
+	        }
+	        if (list) for (var i = list.length; i--; ) if (list[i].constructor === Ctor) {
+	            inst.__b = list[i].__b;
+	            list.splice(i, 1);
+	            break;
+	        }
+	        return inst;
+	    }
+	    function doRender(props, state, context) {
+	        return this.constructor(props, context);
+	    }
+	    function setComponentProps(component, props, opts, context, mountAll) {
+	        if (!component.__x) {
+	            component.__x = !0;
+	            if (component.__r = props.ref) delete props.ref;
+	            if (component.__k = props.key) delete props.key;
+	            if (!component.base || mountAll) {
+	                if (component.componentWillMount) component.componentWillMount();
+	            } else if (component.componentWillReceiveProps) component.componentWillReceiveProps(props, context);
+	            if (context && context !== component.context) {
+	                if (!component.__c) component.__c = component.context;
+	                component.context = context;
+	            }
+	            if (!component.__p) component.__p = component.props;
+	            component.props = props;
+	            component.__x = !1;
+	            if (0 !== opts) if (1 === opts || options.syncComponentUpdates !== !1 || !component.base) renderComponent(component, 1, mountAll); else enqueueRender(component);
+	            if (component.__r) component.__r(component);
+	        }
+	    }
+	    function renderComponent(component, opts, mountAll, isChild) {
+	        if (!component.__x) {
+	            var rendered, inst, cbase, props = component.props, state = component.state, context = component.context, previousProps = component.__p || props, previousState = component.__s || state, previousContext = component.__c || context, isUpdate = component.base, nextBase = component.__b, initialBase = isUpdate || nextBase, initialChildComponent = component._component, skip = !1;
+	            if (isUpdate) {
+	                component.props = previousProps;
+	                component.state = previousState;
+	                component.context = previousContext;
+	                if (2 !== opts && component.shouldComponentUpdate && component.shouldComponentUpdate(props, state, context) === !1) skip = !0; else if (component.componentWillUpdate) component.componentWillUpdate(props, state, context);
+	                component.props = props;
+	                component.state = state;
+	                component.context = context;
+	            }
+	            component.__p = component.__s = component.__c = component.__b = null;
+	            component.__d = !1;
+	            if (!skip) {
+	                rendered = component.render(props, state, context);
+	                if (component.getChildContext) context = extend(extend({}, context), component.getChildContext());
+	                var toUnmount, base, childComponent = rendered && rendered.nodeName;
+	                if ('function' == typeof childComponent) {
+	                    var childProps = getNodeProps(rendered);
+	                    inst = initialChildComponent;
+	                    if (inst && inst.constructor === childComponent && childProps.key == inst.__k) setComponentProps(inst, childProps, 1, context, !1); else {
+	                        toUnmount = inst;
+	                        component._component = inst = createComponent(childComponent, childProps, context);
+	                        inst.__b = inst.__b || nextBase;
+	                        inst.__u = component;
+	                        setComponentProps(inst, childProps, 0, context, !1);
+	                        renderComponent(inst, 1, mountAll, !0);
+	                    }
+	                    base = inst.base;
+	                } else {
+	                    cbase = initialBase;
+	                    toUnmount = initialChildComponent;
+	                    if (toUnmount) cbase = component._component = null;
+	                    if (initialBase || 1 === opts) {
+	                        if (cbase) cbase._component = null;
+	                        base = diff(cbase, rendered, context, mountAll || !isUpdate, initialBase && initialBase.parentNode, !0);
+	                    }
+	                }
+	                if (initialBase && base !== initialBase && inst !== initialChildComponent) {
+	                    var baseParent = initialBase.parentNode;
+	                    if (baseParent && base !== baseParent) {
+	                        baseParent.replaceChild(base, initialBase);
+	                        if (!toUnmount) {
+	                            initialBase._component = null;
+	                            recollectNodeTree(initialBase, !1);
+	                        }
+	                    }
+	                }
+	                if (toUnmount) unmountComponent(toUnmount);
+	                component.base = base;
+	                if (base && !isChild) {
+	                    var componentRef = component, t = component;
+	                    while (t = t.__u) (componentRef = t).base = base;
+	                    base._component = componentRef;
+	                    base._componentConstructor = componentRef.constructor;
+	                }
+	            }
+	            if (!isUpdate || mountAll) mounts.unshift(component); else if (!skip) {
+	                flushMounts();
+	                if (component.componentDidUpdate) component.componentDidUpdate(previousProps, previousState, previousContext);
+	                if (options.afterUpdate) options.afterUpdate(component);
+	            }
+	            if (null != component.__h) while (component.__h.length) component.__h.pop().call(component);
+	            if (!diffLevel && !isChild) flushMounts();
+	        }
+	    }
+	    function buildComponentFromVNode(dom, vnode, context, mountAll) {
+	        var c = dom && dom._component, originalComponent = c, oldDom = dom, isDirectOwner = c && dom._componentConstructor === vnode.nodeName, isOwner = isDirectOwner, props = getNodeProps(vnode);
+	        while (c && !isOwner && (c = c.__u)) isOwner = c.constructor === vnode.nodeName;
+	        if (c && isOwner && (!mountAll || c._component)) {
+	            setComponentProps(c, props, 3, context, mountAll);
+	            dom = c.base;
+	        } else {
+	            if (originalComponent && !isDirectOwner) {
+	                unmountComponent(originalComponent);
+	                dom = oldDom = null;
+	            }
+	            c = createComponent(vnode.nodeName, props, context);
+	            if (dom && !c.__b) {
+	                c.__b = dom;
+	                oldDom = null;
+	            }
+	            setComponentProps(c, props, 1, context, mountAll);
+	            dom = c.base;
+	            if (oldDom && dom !== oldDom) {
+	                oldDom._component = null;
+	                recollectNodeTree(oldDom, !1);
+	            }
+	        }
+	        return dom;
+	    }
+	    function unmountComponent(component) {
+	        if (options.beforeUnmount) options.beforeUnmount(component);
+	        var base = component.base;
+	        component.__x = !0;
+	        if (component.componentWillUnmount) component.componentWillUnmount();
+	        component.base = null;
+	        var inner = component._component;
+	        if (inner) unmountComponent(inner); else if (base) {
+	            if (base.__preactattr_ && base.__preactattr_.ref) base.__preactattr_.ref(null);
+	            component.__b = base;
+	            removeNode(base);
+	            collectComponent(component);
+	            removeChildren(base);
+	        }
+	        if (component.__r) component.__r(null);
+	    }
+	    function Component(props, context) {
+	        this.__d = !0;
+	        this.context = context;
+	        this.props = props;
+	        this.state = this.state || {};
+	    }
+	    function render(vnode, parent, merge) {
+	        return diff(merge, vnode, {}, !1, parent, !1);
+	    }
+	    var options = {};
+	    var stack = [];
+	    var EMPTY_CHILDREN = [];
+	    var IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
+	    var items = [];
+	    var mounts = [];
+	    var diffLevel = 0;
+	    var isSvgMode = !1;
+	    var hydrating = !1;
+	    var components = {};
+	    extend(Component.prototype, {
+	        setState: function(state, callback) {
+	            var s = this.state;
+	            if (!this.__s) this.__s = extend({}, s);
+	            extend(s, 'function' == typeof state ? state(s, this.props) : state);
+	            if (callback) (this.__h = this.__h || []).push(callback);
+	            enqueueRender(this);
+	        },
+	        forceUpdate: function(callback) {
+	            if (callback) (this.__h = this.__h || []).push(callback);
+	            renderComponent(this, 2);
+	        },
+	        render: function() {}
+	    });
+	    var preact = {
+	        h: h,
+	        createElement: h,
+	        cloneElement: cloneElement,
+	        Component: Component,
+	        render: render,
+	        rerender: rerender,
+	        options: options
+	    };
+	    if (true) module.exports = preact; else self.preact = preact;
+	}();
+	//# sourceMappingURL=preact.js.map
+
+/***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1050,8 +1423,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if (process.env.NODE_ENV !== 'production') {
 	  var invariant = __webpack_require__(3);
-	  var warning = __webpack_require__(5);
-	  var ReactPropTypesSecret = __webpack_require__(8);
+	  var warning = __webpack_require__(6);
+	  var ReactPropTypesSecret = __webpack_require__(4);
 	  var loggedTypeFailures = {};
 	}
 	
@@ -1118,11 +1491,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var emptyFunction = __webpack_require__(2);
 	var invariant = __webpack_require__(3);
+	var ReactPropTypesSecret = __webpack_require__(4);
 	
 	module.exports = function() {
-	  // Important!
-	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-	  function shim() {
+	  function shim(props, propName, componentName, location, propFullName, secret) {
+	    if (secret === ReactPropTypesSecret) {
+	      // It is still safe when called from React.
+	      return;
+	    }
 	    invariant(
 	      false,
 	      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
@@ -1134,6 +1510,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function getShim() {
 	    return shim;
 	  };
+	  // Important!
+	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
 	  var ReactPropTypes = {
 	    array: shim,
 	    bool: shim,
@@ -1178,9 +1556,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var emptyFunction = __webpack_require__(2);
 	var invariant = __webpack_require__(3);
-	var warning = __webpack_require__(5);
+	var warning = __webpack_require__(6);
 	
-	var ReactPropTypesSecret = __webpack_require__(8);
+	var ReactPropTypesSecret = __webpack_require__(4);
 	var checkPropTypes = __webpack_require__(12);
 	
 	module.exports = function(isValidElement, throwOnDirectAccess) {
@@ -1487,6 +1865,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return emptyFunction.thatReturnsNull;
 	    }
 	
+	    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+	      var checker = arrayOfTypeCheckers[i];
+	      if (typeof checker !== 'function') {
+	        warning(
+	          false,
+	          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
+	          'received %s at index %s.',
+	          getPostfixForTypeWarning(checker),
+	          i
+	        );
+	        return emptyFunction.thatReturnsNull;
+	      }
+	    }
+	
 	    function validate(props, propName, componentName, location, propFullName) {
 	      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
 	        var checker = arrayOfTypeCheckers[i];
@@ -1619,6 +2011,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // This handles more types than `getPropType`. Only used for error messages.
 	  // See `createPrimitiveTypeChecker`.
 	  function getPreciseType(propValue) {
+	    if (typeof propValue === 'undefined' || propValue === null) {
+	      return '' + propValue;
+	    }
 	    var propType = getPropType(propValue);
 	    if (propType === 'object') {
 	      if (propValue instanceof Date) {
@@ -1628,6 +2023,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	    return propType;
+	  }
+	
+	  // Returns a string that is postfixed to a warning about an invalid type.
+	  // For example, "undefined" or "of type array"
+	  function getPostfixForTypeWarning(value) {
+	    var type = getPreciseType(value);
+	    switch (type) {
+	      case 'array':
+	      case 'object':
+	        return 'an ' + type;
+	      case 'boolean':
+	      case 'date':
+	      case 'regexp':
+	        return 'a ' + type;
+	      default:
+	        return type;
+	    }
 	  }
 	
 	  // Returns class name of the object, if any.
@@ -1648,9 +2060,40 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_15__;
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	if (process.env.NODE_ENV !== 'production') {
+	  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+	    Symbol.for &&
+	    Symbol.for('react.element')) ||
+	    0xeac7;
+	
+	  var isValidElement = function(object) {
+	    return typeof object === 'object' &&
+	      object !== null &&
+	      object.$$typeof === REACT_ELEMENT_TYPE;
+	  };
+	
+	  // By explicitly using `prop-types` you are opting into new development behavior.
+	  // http://fb.me/prop-types-in-prod
+	  var throwOnDirectAccess = true;
+	  module.exports = __webpack_require__(14)(isValidElement, throwOnDirectAccess);
+	} else {
+	  // By explicitly using `prop-types` you are opting into new production behavior.
+	  // http://fb.me/prop-types-in-prod
+	  module.exports = __webpack_require__(13)();
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ })
 /******/ ])
